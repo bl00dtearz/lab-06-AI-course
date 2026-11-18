@@ -1,0 +1,52 @@
+{
+  "harness_controls": [
+    "validate_input",
+    "blind",
+    "refuse",
+    "log",
+    "escalate"
+  ],
+  "format_problems": [],
+  "entries": [
+    {
+      "control": "blind",
+      "principle": "Non-discrimination and equality",
+      "principle_source": "OECD Recommendation on AI, OECD/LEGAL/0449 (2019, as amended 2024), principle 1.2(a); non-binding",
+      "instrument": "Law of the Republic of Kazakhstan No. 94-V of 21 May 2013 'On Personal Data and their Protection'",
+      "provision": "Art. 7 para 9 (no processing of data excessive in content and volume for the purpose) and Art. 7 para 8 (processing must not restrict the subject's rights); also Law No. 230-VIII of 17 Nov 2025 'On Artificial Intelligence', Art. 4 item 2 (fairness and equality), used as a benchmark",
+      "why_here": "Name and university are not merit fields, and in Part 1 flagship universities scored +2.5 points higher (sign p = 0.002, 10 of 10 differing pairs one way) and all 4 gender flips went one way (4/40 vs a floor of 0/40), even though no attribute stood clear of its floor on flips."
+    },
+    {
+      "control": "refuse",
+      "principle": "Privacy and respect for individual autonomy (consent, purpose limitation)",
+      "principle_source": "OECD Recommendation on AI, OECD/LEGAL/0449 (2019, as amended 2024), principle 1.2(a); non-binding",
+      "instrument": "Law of the Republic of Kazakhstan No. 94-V of 21 May 2013 'On Personal Data and their Protection'",
+      "provision": "Art. 7 para 1 (consent of the subject or the legal representative), Art. 14 (use only for the declared purposes), Art. 19-1 para 1 (automated processing that changes rights or interests is prohibited without consent)",
+      "why_here": "The bare pipeline screened a purpose it must never serve, a 17 year old, a missing consent, impossible values and an instruction in the name field without any refusal (Part 4); the law does not ban minors, it requires a legal representative's consent, and this prototype has no channel for it, so it refuses."
+    },
+    {
+      "control": "validate_input",
+      "principle": "Robustness, security and safety",
+      "principle_source": "OECD Recommendation on AI, OECD/LEGAL/0449 (2019, as amended 2024), principle 1.4; non-binding",
+      "instrument": "Law of the Republic of Kazakhstan No. 94-V of 21 May 2013 'On Personal Data and their Protection'",
+      "provision": "Art. 20 para 2 (processing only when protection is ensured) and Art. 22 para 1 item 1 (measures to prevent unauthorized access); the link is indirect, no article names input validation",
+      "why_here": "Impossible values (GPA 9.9, exam score -5) were screened by the bare pipeline and rejected without a word, and a free-text field can carry an instruction to the model; the checks stop both before the model is called (0 model calls in Part 4)."
+    },
+    {
+      "control": "log",
+      "principle": "Accountability and traceability",
+      "principle_source": "OECD Recommendation on AI, OECD/LEGAL/0449 (2019, as amended 2024), principle 1.5; non-binding",
+      "instrument": "Law of the Republic of Kazakhstan No. 94-V of 21 May 2013 'On Personal Data and their Protection'",
+      "provision": "Art. 25 para 2 item 5 (operator must be able to prove consent was obtained) and Art. 19-1 paras 2-3 (explain the automated processing and answer an objection within three working days)",
+      "why_here": "With a model that gave only 10 different scores and showed small unexplained shifts, a decision can only be reconstructed or answered later from a record, so every call, refusal and escalation is logged with field names and the hash of the text, not the applicant's values (this also follows Art. 7 para 9)."
+    },
+    {
+      "control": "escalate",
+      "principle": "Human oversight and the right to challenge an automated output",
+      "principle_source": "OECD Recommendation on AI, OECD/LEGAL/0449 (2019, as amended 2024), principles 1.2(a) (autonomy) and 1.3 (information enabling those adversely affected to challenge the output); non-binding",
+      "instrument": "Law of the Republic of Kazakhstan No. 94-V of 21 May 2013 'On Personal Data and their Protection'",
+      "provision": "Art. 19-1 paras 1-3 (automated processing that changes rights or interests; right to object; review within three working days); Art. 1 para 2-3 defines automated processing as processing without the owner's or operator's participation; also Law No. 230-VIII Art. 4 items 4 and 5 as a benchmark",
+      "why_here": "Decisions sit on a knife edge (score 45 gave both shortlist and reject; band (40, 45) held 16.0% of baseline profiles) and blinding changed the decision for 46 of 400 profiles, so a person must read the borderline cases, 34 of 400 (8.5%) in the harness run."
+    }
+  ]
+}
